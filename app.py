@@ -10,6 +10,8 @@ from pymilvus import MilvusClient
 from langchain.embeddings import HuggingFaceEmbeddings
 import ollama
 import json
+st.image("mmu_logo.png", width=150) 
+# st.set_page_config(layout="wide")
 
 # Set path to Tesseract
 pytesseract.pytesseract.tesseract_cmd = r"/mnt/c/Program Files/Tesseract-OCR/tesseract.exe"  # For WSL (Windows Subsystem for Linux)
@@ -150,7 +152,7 @@ def get_prompt(selected_program, extracted_text, formatted_similar_users):
 # Top-N Recommended Program
 def get_program_recommendation(selected_program, extracted_text):
     # Extract Top-K Similar Users
-    st.write(f"### Top-{K} Similar Historical Students")
+    # st.write(f"### Top-{K} Similar Historical Students")
     results = extract_top_k_similar_users(extracted_text) # put selected program later
     top_k_similar_users = results[0] 
     formatted_similar_users = ""
@@ -165,7 +167,7 @@ def get_program_recommendation(selected_program, extracted_text):
             \n**Distance between user and existing data:** {user['distance']}\n
             \n{entity}\n
         """
-    st.write(formatted_similar_users)
+    # st.write(formatted_similar_users)
 
     # Top-N Program Recommendation
     st.write(f"### Top-{N} Program Recommendations:")
@@ -181,8 +183,8 @@ def main():
     st.title("MMU Program Recommendation")
     selected_programs, extracted_text = user_input()
     if extracted_text:
-        st.write("### Extracted Text from Uploaded File:")
-        st.write(extracted_text)
+        # st.write("### Extracted Text from Uploaded File:")
+        # st.write(extracted_text)
         get_program_recommendation(selected_programs, extracted_text)
 
 # Run the application      
