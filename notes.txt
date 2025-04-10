@@ -1,0 +1,118 @@
+---------------------------------------------------------------------------------------------------------------------------
+Dataset
+---------------------------------------------------------------------------------------------------------------------------
+Data Collection:
+1. MMU Historical Enrollment Data: ID, Pre-University Program, Pre-University Result, University Program, University Graduation Rate, etc.
+2. MMU Program Data: Program, Faculty, Requirement, etc.
+
+Milvus Collection:
+1. One Collection => One Pre-University Program (SPM, STPM, etc)
+2. Program Collection => MMU Undergraduates Programs (including program name, faculty, requirements)
+
+Folder Structure (Dataset):
+1. Historical Dataset: Training and Validation - For Training and Evaluation
+2. Test Dataset: Testing (in terms of PDF, PNG, or JPG) - For Deployment
+3. Program Dataset - For Deployment (Requirement Matching)
+---------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------
+Program: Pre-University Programs & MMU Program Path
+---------------------------------------------------------------------------------------------------------------------------
+Pre-University Programs: 
+- SPM, STPM, IGCSE, A-Levels, Foundation Programs, Matriculations, UEC, etc.
+- This pre-university program should summarize from MMU Program Requirements and their Historical Enrollment Data.
+
+MMU Programs Path (exclude Master and PhD programs):
+1. Foundation => Bachelor Degree
+2. Diploma => Bachelor Degree
+3. Diploma
+---------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------
+Limitation
+---------------------------------------------------------------------------------------------------------------------------
+Limitation:
+1. Requirement Matching for MMU Program
+2. OCR in scanninng unstructured data like PDF, PNG, and JPG
+---------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------
+Objective 2 & 3: Program Recommendation and Graduation Rate % Prediction
+---------------------------------------------------------------------------------------------------------------------------
+Top-N Program Recommendation (Objective 2)
+- Input: Pre-University Program & Result
+- Method: RAG (Retrieval-Augmented Generation) with LLM (Large Language Model)
+- Output: Recommended Programs with Reasoning
+
+Graduation Rate % Prediction (Objective 3)
+- Input: Recommended Programs + User Results
+- Method: Machine Learning
+- Output: Graduation Rate % for each recommended Programs
+---------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------
+Implementation
+---------------------------------------------------------------------------------------------------------------------------
+Training Phase (Recommendation Engine):
+1. Load the Data that includes Program Enrollment Histories.
+2. Embed the Data using embedding techniques like "all-MiniLM-L6-v2".
+3. Store the Data into Vector Database (Milvus).
+
+Process in Recommendation Engine:
+1. Load the Vector Database (Milvus). 
+2. Semantic search on Vector DB for similar users using metrics like Cosine. (similar pre-uni results)
+3. Return Top-N Similar Student.
+4. Generate final recommendation based on user input (embedding) and Top-N similar student using LLM like Deepseek, Llama, etc.
+5. Return final recommendation.
+
+Training Phase (Graduation Rate):
+1. Load the Data that includes student results and graduation rate in the particular program.
+2. Train ML models (Program, Result, etc.) to predict the graduation rate (regression).
+3. Validate ML models.
+4. Fine-tune the ML models.
+5. Evaluate the ML models.
+6. Export the ML models.
+
+Process in Graduation Rate Prediction
+1. Load the pre-trained ML models.
+2. Predict the graduation rate based on the recommended program and pre-university results.
+3. Return graduation rate.
+
+Deployment (Streamlit):
+1. Select pre-university programs
+2. Upload pre-university results 
+3. Semantic OCR to extract the results (courses and grades)
+4. Recommendation Engine (RAG - LLM) - Input User Data (pre-university programs & results)
+5. Graduation Rate (ML) - Input User Data (pre-university programs & results)
+6. Show the output (Recommended Program and Graduation Rate Prediction)
+
+In summary, 3 files is required for this project:
+1. Train recommendation engine
+2. Train graduation rate prediction engine 
+3. Deployment (Program Recommendation + Graduation Rate Prediction)
+---------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------
+Notes
+---------------------------------------------------------------------------------------------------------------------------
+Important Notes for Program Recommendation:
+1. Top-K Similar Users
+2. Requirement Matching
+3. Top-N Programs
+---------------------------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------------------
+Task
+---------------------------------------------------------------------------------------------------------------------------
+Task to do:
+1. Create sample dataset for training (csv) and testing (pdf, png, and jpg).
+2. Use LLM to extract "Entry Requirements" for each programme.
+3. Once grant is approved, implement the program using MMU dataset.
+
+---------------------------------------------------------------------------------------------------------------------------
+
+- OCR
+- Embedding
+- RAG - Vector DB, Embedding, Re-ranker
+- LLM Reasoning Model
+- UI Design
