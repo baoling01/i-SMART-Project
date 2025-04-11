@@ -11,9 +11,7 @@ from langchain.embeddings import HuggingFaceEmbeddings
 import ollama
 import json
 
-# st.set_page_config(page_title="MMU Program Recommendation", page_icon="🛢️", layout="wide")
 st.set_page_config(page_title="Program Recommendation", page_icon="https://4.bp.blogspot.com/-_EMlBTSVU6E/Tha_OAK8nMI/AAAAAAAAACY/azBH7qFTRlg/s1600/mmu-logo_m.jpg", layout="wide")
-
 st.markdown(
     """
     <div style="display: flex; align-items: center;">
@@ -23,14 +21,6 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
-
-# # Create a row with two columns
-# col1, col2 = st.columns([1, 10])  # Adjust the ratio as needed
-
-# with col1:
-#     st.image("mmu_logo.png", width=100)
-# with col2:
-#     st.title("MMU Program Recommendation System")
 
 # Set path to Tesseract
 pytesseract.pytesseract.tesseract_cmd = r"/mnt/c/Program Files/Tesseract-OCR/tesseract.exe"  # For WSL (Windows Subsystem for Linux)
@@ -171,7 +161,6 @@ def get_prompt(selected_program, extracted_text, formatted_similar_users):
 # Top-N Recommended Program
 def get_program_recommendation(selected_program, extracted_text):
     # Extract Top-K Similar Users
-    # st.write(f"### Top-{K} Similar Historical Students")
     results = extract_top_k_similar_users(extracted_text) # put selected program later
     top_k_similar_users = results[0] 
     formatted_similar_users = ""
@@ -186,7 +175,6 @@ def get_program_recommendation(selected_program, extracted_text):
             \n**Distance between user and existing data:** {user['distance']}\n
             \n{entity}\n
         """
-    # st.write(formatted_similar_users)
 
     # Top-N Program Recommendation
     st.write(f"### Top-{N} Program Recommendation:")
@@ -201,12 +189,8 @@ def get_program_recommendation(selected_program, extracted_text):
 def main():
     selected_programs, extracted_text = user_input()
     if extracted_text:
-        # st.write("### Extracted Text from Uploaded File:")
-        # st.write(extracted_text)
         get_program_recommendation(selected_programs, extracted_text)
 
 # Run the application      
 if __name__ == "__main__":
     main()
-
-# In real application, only Top-N Program will be shown.
