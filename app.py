@@ -10,6 +10,10 @@ from pymilvus import MilvusClient
 from langchain.embeddings import HuggingFaceEmbeddings
 import ollama
 import json
+import cv2
+import numpy as np 
+import chardet 
+from pdf2image import convert_from_path
 
 st.set_page_config(page_title="Program Recommendation", page_icon="https://4.bp.blogspot.com/-_EMlBTSVU6E/Tha_OAK8nMI/AAAAAAAAACY/azBH7qFTRlg/s1600/mmu-logo_m.jpg", layout="wide")
 st.markdown(
@@ -42,23 +46,11 @@ def extract_text_from_pdf(uploaded_file):
     except Exception as e:
         return None  # If extraction fails, return None
 
-# Function to extract text from image-based PDFs using OCR
-def extract_text_from_image_based_pdf(uploaded_file):
-    # Convert PDF to images using PyMuPDF or pdf2image
-    try:
-        from pdf2image import convert_from_path
-        pages = convert_from_path(uploaded_file, 500)
-        text = ""
-        for page in pages:
-            text += pytesseract.image_to_string(page)
-        return text
-    except Exception as e:
-        return "Error during image-based PDF extraction."
-
 # Function to extract text from image files (JPG, PNG)
 def extract_text_from_image(uploaded_file):
     img = Image.open(uploaded_file)
-    text = pytesseract.image_to_string(img)  # OCR using pytesseract
+    text = pytesseract.image_to_string(img)
+    st.write(text)
     return text
 
 # Function to capture user inputs
@@ -88,8 +80,6 @@ def user_input():
         if uploaded_file.type == "application/pdf":
             # Attempt to extract text from text-based PDF
             extracted_text = extract_text_from_pdf(uploaded_file)
-            if not extracted_text:  # If text extraction failed, use OCR for image-based PDF
-                extracted_text = "Text extraction failed. Attempting OCR for image-based PDF...\n" + extract_text_from_image_based_pdf(uploaded_file)
 
         # Check if file is an image (JPG, PNG)
         elif uploaded_file.type in ["image/jpeg", "image/png"]:
