@@ -27,7 +27,7 @@ llm = ChatOllama(model="llama3.2", temperature=0)
 vector_store = Chroma(
     collection_name="SPM",
     embedding_function=embedding,
-    persist_directory="chroma_db",
+    persist_directory="chroma_db_new",
 )
 
 # Prompt template

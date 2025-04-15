@@ -7,9 +7,6 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_chroma import Chroma
-from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain.chains import create_retrieval_chain
-from langchain_core.documents import Document
 
 # -------------------- Streamlit Page Setup --------------------
 st.set_page_config(page_title="Program Recommendation", page_icon="https://4.bp.blogspot.com/-_EMlBTSVU6E/Tha_OAK8nMI/AAAAAAAAACY/azBH7qFTRlg/s1600/mmu-logo_m.jpg", layout="wide")
