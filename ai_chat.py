@@ -10,7 +10,7 @@ from langchain.chains import create_retrieval_chain
 st.set_page_config(page_title="LangChain QA Bot", page_icon="💬", layout="centered")
 
 # Title
-st.title("💬 Ask your Question")
+st.title("💬 AI Chatbot")
 st.caption("Powered by LangChain, Ollama, and ChromaDB")
 
 # Initialize Embeddings
@@ -43,7 +43,12 @@ retrieval_chain = create_retrieval_chain(retriever, combine_docs_chain)
 
 # Streamlit form
 with st.form(key="qa_form"):
-    user_question = st.text_input("Enter your question:", placeholder="Type your question here...")
+    # user_question = st.text_input("Enter your question:", placeholder="Type your question here...")
+    user_question = st.text_area(
+        "Enter your question:",
+        placeholder="Type your question here...",
+        height=100  # you can adjust the starting height as needed
+    )
     submit_button = st.form_submit_button(label="🔍 Ask")
 
 if submit_button and user_question.strip() != "":
