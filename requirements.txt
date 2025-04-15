@@ -70,7 +70,12 @@ langchain-chroma==0.2.2
 langchain-community==0.3.21
 langchain-core==0.3.51
 langchain-huggingface==0.1.2
+<<<<<<< HEAD
 langchain-ollama==0.3.1
+=======
+langchain-ollama
+langchain-chroma
+>>>>>>> 129bb9d913a1b37fae970c88fb5dff6731098c95
 langchain-text-splitters==0.3.8
 langsmith==0.3.24
 markdown-it-py==3.0.0
